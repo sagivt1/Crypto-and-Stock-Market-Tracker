@@ -1,17 +1,20 @@
-#include "logic.hpp"
+#include "market_client.hpp"
 #include <print>
-#include <exception>
+
 
 int main() {
-    try {
-        std::println("Starting {}", MarketConfig::get_app_version());
+    
+    MarketClient client;
 
-        int result = MarketConfig::calculate_dummy_value(10, 2);
-        std::println("Check Result: {}", result);
+    std::println("--- Crypto Tracker CLI ---");
+    std::println("Fetching Bitcoin price...");
 
-    } catch (const std::exception& e) {
-        std::println(stderr, "Error: {}", e.what());
-        return 1;
+    auto result = client.get_coin_price("bitcoin");
+
+    if(result) {
+        std::println("Success! {} price is ${}", result->id, result->current_price);
+    } else {
+        std::println(stderr, "Failed to fetch crypto data.");
     }
 
     return 0;

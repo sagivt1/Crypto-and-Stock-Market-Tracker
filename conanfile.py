@@ -10,7 +10,11 @@ class MarketTrackerConan(ConanFile):
 
     # Define runtime dependencies.
     def requirements(self):
-        pass
+        # HTTP request library
+        self.requires("cpr/1.12.0")
+
+        # JSON parsing library
+        self.requires("nlohmann_json/3.12.0")
 
     # Define build-time and test dependencies.
     def build_requirements(self):

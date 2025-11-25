@@ -12,13 +12,25 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Disable non-standard compiler extensions for better portability.
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# --- Dependencies ---
+find_package(cpr REQUIRED)
+find_package(nlohmann_json REQUIRED)
+
 # --- Core Library ---
 # Define a library for the core application logic.
 add_library(core_lib
     src/logic.cpp
+    src/market_client.cpp
 )
 # Make the 'include' directory available to core_lib and any targets that link to it.
 target_include_directories(core_lib PUBLIC include)
+
+# Link external libraries to the core library.
+target_link_libraries(core_lib 
+    PUBLIC 
+    cpr::cpr 
+    nlohmann_json::nlohmann_json
+)
 
 # --- Main Executable ---
 # Define the main application executable.
