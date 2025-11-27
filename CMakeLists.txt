@@ -15,6 +15,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # --- Dependencies ---
 find_package(cpr REQUIRED)
 find_package(nlohmann_json REQUIRED)
+find_package(sfml REQUIRED)
+find_package(imgui REQUIRED)
+find_package(imgui-sfml REQUIRED)
+
 
 # --- Core Library ---
 # Define a library for the core application logic.
@@ -30,6 +34,11 @@ target_link_libraries(core_lib
     PUBLIC 
     cpr::cpr 
     nlohmann_json::nlohmann_json
+    sfml-graphics 
+    sfml-window 
+    sfml-system
+    imgui::imgui
+    ImGui-SFML::ImGui-SFML  # <--- THIS IS THE FIX. MUST BE ImGui-SFML::ImGui-SFML
 )
 
 # --- Main Executable ---
@@ -39,6 +48,12 @@ add_executable(MarketTracker src/main.cpp)
 # Link the core logic library to the main executable.
 # 'PRIVATE' ensures this dependency is not propagated to other targets linking MarketTracker.
 target_link_libraries(MarketTracker PRIVATE core_lib)
+# Link libraries to the main executable.
+target_link_libraries(MarketTracker PRIVATE 
+    core_lib
+    imgui::imgui
+    imgui-sfml
+    sfml-graphics)
 
 # --- Testing ---
 # Enable the CTest testing framework.

@@ -12,9 +12,12 @@ class MarketTrackerConan(ConanFile):
     def requirements(self):
         # HTTP request library
         self.requires("cpr/1.12.0")
-
         # JSON parsing library
         self.requires("nlohmann_json/3.12.0")
+        # Gui & Windows
+        self.requires("imgui/1.91.8")
+        self.requires("sfml/2.6.2")
+        self.requires("imgui-sfml/2.6.1")
 
     # Define build-time and test dependencies.
     def build_requirements(self):
